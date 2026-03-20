@@ -12,18 +12,16 @@ pandas = ">=1.5"
 pyarrow = ">=12.0"
 numpy = ">=1.23"
 
-# Install viewserver-python from GitHub Packages
-# To install from a local wheel instead:
-#   poetry run pip install /path/to/viewserver_python-0.1.0-cp310-cp310-win_amd64.whl
-viewserver-python = {version = ">=0.1.0", source = "github", optional = true}
+# Pre-built wheel from GitHub Releases.
+# Update the URL when a new version is released.
+# Find the latest at: https://github.com/viewserver-rust/viewserver-core/releases
+viewserver-python = { url = "https://github.com/viewserver-rust/viewserver-core/releases/download/python-v0.1.0/viewserver_python-0.1.0-cp310-cp310-win_amd64.whl", optional = true }
+
+[tool.poetry.extras]
+viewserver = ["viewserver-python"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=7.0"
-
-[[tool.poetry.source]]
-name = "github"
-url = "https://pypi.pkg.github.com/viewserver-rust/"
-priority = "supplemental"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
