@@ -1,0 +1,31 @@
+{
+  "serviceConfig": {
+    "name": "ExamplePythonNode",
+    "hostName": "127.0.0.1",
+    "grpcPort": 19000,
+    "httpPort": 19001,
+    "httpContentRoot": "",
+    "isSecure": false,
+    "expressionUsername": "",
+    "expressionPassword": ""
+  },
+  "reportEngineConfig": {
+    "name": "ReportingEngine",
+    "hostName": "192.168.5.95",
+    "grpcPort": 16000,
+    "httpPort": 16001,
+    "httpContentRoot": null,
+    "isSecure": false,
+    "expressionUsername": "",
+    "expressionPassword": ""
+  },
+  "sqlServerPersistenceConfigs": [],
+  "parquetPersistenceConfigs": [],
+  "jsonPersistenceConfigs": [],
+  "gitHubPersistenceConfigs": [],
+  "persistenceStrategyAliases": {},
+  "expressionReleaseTag": "",
+  "isReportEngine": false,
+  "logLevel": "Info",
+  "fakeData": false
+}
