@@ -3,23 +3,40 @@
 Example project demonstrating how to use `viewserver-python` to build
 Python-driven ViewServer operators.
 
+## Prerequisites
+
+- Python 3.9+
+- [GitHub CLI](https://cli.github.com) (`gh`) authenticated with access to
+  `viewserver-rust/viewserver-core` (private repo)
+
 ## Setup
 
-### Option A: Install from GitHub Release (recommended)
+### Quick start (recommended)
 
-```bash
-# Install Poetry if you don't have it
-pip install poetry
-
-# Install pure-Python deps + pre-built viewserver-python wheel
-poetry install --extras viewserver
+```
+quickstart.bat
 ```
 
-The `viewserver-python` wheel URL is in `pyproject.toml`. Update it when a
-new version is released. Find releases at:
-https://github.com/viewserver-rust/viewserver-core/releases
+This will create a virtual environment, install dependencies, download the
+`viewserver-python` wheel from the private GitHub release using `gh`, and
+run the interactive config wizard.
 
-### Option B: Install from local wheel (development)
+### Manual install
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install pandas pyarrow numpy
+
+# Download wheel from private repo (requires gh auth)
+gh release download python-v0.1.0-164c267 --repo viewserver-rust/viewserver-core --pattern "*win_amd64.whl" --dir .venv\wheels --clobber
+pip install .venv\wheels\viewserver_python-*.whl
+
+# Run config wizard
+python setup_config.py
+```
+
+### Install from local wheel (development)
 
 ```bash
 # Build viewserver-python from source (requires Rust toolchain)
@@ -28,17 +45,8 @@ maturin build --release
 
 # Install pure-Python deps, then the local wheel
 cd ../viewserver-python-example
-poetry install
-poetry run pip install ../viewserver-core3/target/wheels/viewserver_python-*.whl
-```
-
-### Option C: Direct pip install (no Poetry)
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
 pip install pandas pyarrow numpy
-pip install https://github.com/viewserver-rust/viewserver-core/releases/download/python-v0.1.0/viewserver_python-0.1.0-cp310-cp310-win_amd64.whl
+pip install ../viewserver-core3/target/wheels/viewserver_python-*.whl
 ```
 
 ## Usage
