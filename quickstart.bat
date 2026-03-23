@@ -28,20 +28,8 @@ if errorlevel 1 (
 )
 
 echo.
-echo Downloading viewserver-python wheel from GitHub Release...
-echo (requires GitHub CLI authenticated with access to viewserver-rust/viewserver-core)
-where gh >nul 2>&1
-if errorlevel 1 (
-    echo ERROR: GitHub CLI ^(gh^) not found. Install from https://cli.github.com
-    exit /b 1
-)
-gh release download python-v0.1.0-164c267 --repo viewserver-rust/viewserver-core --pattern "*win_amd64.whl" --dir .venv\wheels --clobber
-if errorlevel 1 (
-    echo ERROR: Failed to download wheel. Check gh auth status.
-    exit /b 1
-)
-echo Installing viewserver-python wheel...
-for %%f in (.venv\wheels\*win_amd64.whl) do pip install "%%f"
+echo Installing viewserver-python wheel from GitHub Release...
+pip install https://github.com/viewserver-rust/viewserver-python-example/releases/download/v.1.1.5/viewserver_python-0.1.0-cp310-cp310-win_amd64.whl
 if errorlevel 1 (
     echo ERROR: Failed to install viewserver-python wheel.
     exit /b 1

@@ -6,8 +6,6 @@ Python-driven ViewServer operators.
 ## Prerequisites
 
 - Python 3.9+
-- [GitHub CLI](https://cli.github.com) (`gh`) authenticated with access to
-  `viewserver-rust/viewserver-core` (private repo)
 
 ## Setup
 
@@ -17,20 +15,16 @@ Python-driven ViewServer operators.
 quickstart.bat
 ```
 
-This will create a virtual environment, install dependencies, download the
-`viewserver-python` wheel from the private GitHub release using `gh`, and
-run the interactive config wizard.
+This will create a virtual environment, install dependencies and the
+`viewserver-python` wheel, and run the interactive config wizard.
 
 ### Manual install
 
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
-pip install pandas pyarrow numpy
-
-# Download wheel from private repo (requires gh auth)
-gh release download python-v0.1.0-164c267 --repo viewserver-rust/viewserver-core --pattern "*win_amd64.whl" --dir .venv\wheels --clobber
-pip install .venv\wheels\viewserver_python-*.whl
+pip install -e .
+pip install https://github.com/viewserver-rust/viewserver-python-example/releases/download/v.1.1.5/viewserver_python-0.1.0-cp310-cp310-win_amd64.whl
 
 # Run config wizard
 python setup_config.py
