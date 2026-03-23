@@ -51,40 +51,34 @@ pip install ../viewserver-core3/target/wheels/viewserver_python-*.whl
 
 ## Usage
 
-### Run the standalone transform demo (no engine needed)
+Edit `config.json` to point at your ReportingEngine (or run `quickstart.bat`
+to configure it interactively), then:
 
 ```bash
-poetry run python -m viewserver_example.standalone
-```
-
-### Run as a ViewServer node
-
-Edit `config.json` to point at your ReportingEngine, then:
-
-```bash
-poetry run python -m viewserver_example.node --config config.json
+python -m viewserver_example.node --config config.json
 ```
 
 ### Run tests
 
 ```bash
-poetry run pytest
+pytest
 ```
 
 ## Project structure
 
 ```
 viewserver-python-example/
-├── pyproject.toml              # Poetry project with viewserver-python URL dependency
+├── quickstart.bat              # First-time setup script
+├── setup_config.py             # Interactive config wizard
+├── pyproject.toml              # Project dependencies
 ├── config.json                 # ViewServer node config (edit for your environment)
 ├── src/
 │   └── viewserver_example/
 │       ├── __init__.py
-│       ├── node.py             # Full ViewServer node with Python operators
-│       ├── standalone.py       # Standalone pandas transform demo (no engine)
+│       ├── node.py             # ViewServer node with Python operators
 │       └── transforms.py       # Reusable transform functions
 └── tests/
-    └── test_transforms.py      # Unit tests for transforms (no engine needed)
+    └── test_transforms.py      # Unit tests for transforms
 ```
 
 ## How it works

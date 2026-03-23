@@ -20,10 +20,10 @@ if not exist ".venv" (
 :: Activate venv
 call .venv\Scripts\activate.bat
 
-echo Installing dependencies...
-pip install pandas pyarrow numpy
+echo Installing project and dependencies...
+pip install -e .
 if errorlevel 1 (
-    echo ERROR: Failed to install dependencies.
+    echo ERROR: Failed to install project dependencies.
     exit /b 1
 )
 
@@ -67,7 +67,6 @@ echo   Activate your environment with:
 echo     .venv\Scripts\activate
 echo.
 echo   Then run:
-echo     python -m viewserver_example.standalone
 echo     python -m viewserver_example.node --config config.json
 echo ============================================================
 echo.
