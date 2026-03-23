@@ -17,11 +17,15 @@ DEFAULTS = {
     "service_hostname": socket.gethostbyname(socket.gethostname()),
     "grpc_port": 19000,
     "http_port": 19001,
-    "report_engine_hostname": "192.168.5.95",
-    "report_engine_grpc_port": 16000,
-    "report_engine_http_port": 16001,
     "log_level": "Info",
 }
+
+ENVIRONMENTS = [
+    {"name": "EXP",   "hostname": "192.168.171.174", "grpc_port": 6080, "http_port": 6081},
+    {"name": "UAT",   "hostname": "192.168.4.104",   "grpc_port": 6080, "http_port": 6081},
+    {"name": "STAGE", "hostname": "192.168.4.131",   "grpc_port": 6080, "http_port": 6081},
+]
+DEFAULT_ENV = 0  # EXP
 
 
 def prompt(label: str, default):
@@ -51,12 +55,26 @@ def main():
     http_port = prompt("HTTP port", DEFAULTS["http_port"])
     print()
 
-    # --- Report engine ---
-    print("Report Engine Connection")
+    # --- Report engine environment ---
+    print("Report Engine Environment")
     print("-" * 40)
-    re_hostname = prompt("Report engine hostname", DEFAULTS["report_engine_hostname"])
-    re_grpc_port = prompt("Report engine gRPC port", DEFAULTS["report_engine_grpc_port"])
-    re_http_port = prompt("Report engine HTTP port", DEFAULTS["report_engine_http_port"])
+    for i, env in enumerate(ENVIRONMENTS):
+        default_marker = " (default)" if i == DEFAULT_ENV else ""
+        print(f"  {i + 1}) {env['name']:6s}  {env['hostname']}:{env['grpc_port']}{default_marker}")
+    print()
+    choice = prompt("Select environment", DEFAULT_ENV + 1)
+    try:
+        env_index = int(choice) - 1
+        if not 0 <= env_index < len(ENVIRONMENTS):
+            raise ValueError
+    except (ValueError, TypeError):
+        print(f"  Invalid choice, using default ({ENVIRONMENTS[DEFAULT_ENV]['name']})")
+        env_index = DEFAULT_ENV
+    selected_env = ENVIRONMENTS[env_index]
+    re_hostname = selected_env["hostname"]
+    re_grpc_port = selected_env["grpc_port"]
+    re_http_port = selected_env["http_port"]
+    print(f"  -> {selected_env['name']} ({re_hostname}:{re_grpc_port})")
     print()
 
     # --- Misc ---
@@ -105,7 +123,7 @@ def main():
     print(f"  Hostname:               {service_hostname}")
     print(f"  gRPC port:              {grpc_port}")
     print(f"  HTTP port:              {http_port}")
-    print(f"  Report engine:          {re_hostname}:{re_grpc_port}")
+    print(f"  Report engine:          {selected_env['name']} ({re_hostname}:{re_grpc_port})")
     print(f"  Log level:              {log_level}")
     print()
 
