@@ -62,11 +62,19 @@ if errorlevel 1 (
 echo.
 echo ============================================================
 echo   Quick start complete!
-echo.
-echo   Activate your environment with:
-echo     .venv\Scripts\activate
-echo.
-echo   Then run:
-echo     python -m viewserver_example.node --config config.json
 echo ============================================================
 echo.
+
+set /p START_NOW="  Start the ViewServer node now? [Y/n]: "
+if /i "%START_NOW%"=="n" (
+    echo.
+    echo   To start later, run:
+    echo     .venv\Scripts\activate
+    echo     python -m viewserver_example.node --config config.json
+    echo.
+) else (
+    echo.
+    echo   Starting ViewServer node...
+    echo.
+    python -m viewserver_example.node --config config.json
+)
